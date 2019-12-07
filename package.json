@@ -37,7 +37,16 @@
     "url": "https://github.com/itsjonq/controls/issues"
   },
   "homepage": "https://github.com/itsjonq/controls#readme",
-  "keywords": [],
+  "keywords": [
+    "react",
+    "ui",
+    "development",
+    "dev-tools",
+    "knobs",
+    "controls",
+    "control-panel",
+    "control"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "7.7.5",
