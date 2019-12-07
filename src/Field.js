@@ -107,7 +107,7 @@ export function TextAreaField(props) {
 			as="textarea"
 			resize="vertical"
 			minHeight={19}
-			row={3}
+			rows={3}
 		/>
 	);
 }

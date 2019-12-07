@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useControlPanel, ControlPanel } from '../src/index';
 
 export default {
@@ -16,40 +16,71 @@ const Example = () => {
 		text,
 		textarea,
 	} = useControlPanel();
-	const [value, setValue] = useState(0);
 
 	const props = {
-		children: text('text', 'Hello'),
-		range: range('range', 10, { min: 0, max: 100 }),
+		text: text('text', 'Hello'),
 		color: color('color', 'red'),
-		date: date('date', 'December 7, 2019'),
-		textarea: textarea('textarea', 'Hello'),
+		range: range('range', 10, { min: 0, max: 100 }),
 		number: number('number', '123321'),
 		boolean: boolean('boolean', false),
+
 		select: select(
 			'select',
 			{
 				One: 1,
 				Two: 2,
 				Three: 3,
+				Four: 4,
 			},
 			1,
 		),
+		date: date('date', 'December 7, 2019'),
+		textarea: textarea('textarea', 'Hello'),
 	};
 
 	return (
 		<div>
 			<ControlPanel />
-			<button onClick={() => setValue(value + 1)}>Update</button>
-			<br />
-			{value}
-			<br />
-			{props.children}
-			{props.color}
-			{props.range}
-			{props.number}
-			{props.boolean}
-			{props.select}
+			<p>
+				<strong>text</strong>
+				<br />
+				{props.text}
+			</p>
+			<p>
+				<strong>color</strong>
+				<br />
+				{props.color}
+			</p>
+			<p>
+				<strong>range</strong>
+				<br />
+				{props.range}
+			</p>
+			<p>
+				<strong>number</strong>
+				<br />
+				{props.number}
+			</p>
+			<p>
+				<strong>boolean</strong>
+				<br />
+				{props.boolean ? 'true' : 'false'}
+			</p>
+			<p>
+				<strong>select</strong>
+				<br />
+				{props.select}
+			</p>
+			<p>
+				<strong>date</strong>
+				<br />
+				{props.date}
+			</p>
+			<p>
+				<strong>textarea</strong>
+				<br />
+				{props.textarea}
+			</p>
 		</div>
 	);
 };

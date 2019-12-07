@@ -6,7 +6,6 @@ import * as knobs from './knobs';
 export function useControlPanel() {
 	const [attributes, setAttributes] = useState(getAttributes());
 	const ref = useRef(false);
-	const idRef = useRef(1);
 
 	useEffect(() => {
 		const updateState = () => {
@@ -28,5 +27,5 @@ export function useControlPanel() {
 		};
 	}, [ref, setAttributes]);
 
-	return { ...knobs, attributes, idRef: idRef.current };
+	return { ...knobs, attributes };
 }

@@ -26,7 +26,7 @@ function toColor(value) {
 }
 
 function toDate(value) {
-	return new Date(value);
+	return new Date(value).toISOString().slice(0, 10);
 }
 
 export function boolean(prop, value) {

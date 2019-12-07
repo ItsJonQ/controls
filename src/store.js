@@ -10,11 +10,13 @@ function parseValue(value) {
 }
 
 function createAttribute(prop, value, props) {
+	const parseValueFn = props.parseValue || parseValue;
+
 	return {
 		prop,
-		value,
 		parseValue,
 		...props,
+		value: parseValueFn(value),
 	};
 }
 

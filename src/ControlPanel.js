@@ -1,27 +1,42 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import usePortal from 'react-useportal';
 import { View } from '@itsjonq/elm';
-import { useControlPanel } from './useControlPanel';
 import { updateAttribute } from './store';
+import { useControlPanel } from './useControlPanel';
 import { Field } from './Field';
-import { createUniqueIdFactory } from './utils';
-
-const panelId = createUniqueIdFactory();
 
 export function ControlPanel(props) {
 	const { Portal } = usePortal();
-	const componentIdRef = useRef(panelId());
-	const { attributes, idRef } = useControlPanel();
+	const { attributes } = useControlPanel();
 
-	if (componentIdRef.current !== idRef) {
-		return null;
-	}
-
-	const { isDark, title, padding, style: styleProp, ...restProps } = props;
+	const { isDark, title, padding, ...restProps } = props;
 
 	const handleOnChange = prop => nextValue => {
 		updateAttribute({ prop, value: nextValue });
 	};
+
+	const headerTitle = title || 'Control Panel';
+
+	return (
+		<Portal>
+			<Wrapper {...restProps} isDark={isDark}>
+				<Header>{headerTitle}</Header>
+				<Body padding={padding || 8}>
+					{attributes.map(item => (
+						<Field
+							{...item}
+							key={item.prop}
+							onChange={handleOnChange(item.prop)}
+						/>
+					))}
+				</Body>
+			</Wrapper>
+		</Portal>
+	);
+}
+
+function Wrapper(props) {
+	const { isDark, style: styleProp = {} } = props;
 
 	const backgroundColor = isDark ? 'black' : 'white';
 	const borderColor = isDark ? 'white' : 'black';
@@ -49,29 +64,21 @@ export function ControlPanel(props) {
 		display: 'flex',
 	};
 
-	const headerTitle = title || 'Control Panel';
+	return <View {...styleProps} {...props} style={componentStyles} />;
+}
 
+function Header(props) {
 	return (
-		<Portal>
-			<View {...styleProps} {...restProps} style={componentStyles}>
-				<View
-					fontSize={12}
-					fontWeight="bold"
-					padding="6px 8px"
-					borderBottom="2px solid var(--controlPanelBorderColor)"
-				>
-					{headerTitle}
-				</View>
-				<View overflowY="auto" flex={1} padding={padding || 8}>
-					{attributes.map(item => (
-						<Field
-							{...item}
-							key={item.prop}
-							onChange={handleOnChange(item.prop)}
-						/>
-					))}
-				</View>
-			</View>
-		</Portal>
+		<View
+			fontWeight="bold"
+			padding="6px 8px"
+			borderBottom="2px solid var(--controlPanelBorderColor)"
+			textTransform="uppercase"
+			{...props}
+		/>
 	);
+}
+
+function Body(props) {
+	return <View overflowY="auto" flex={1} {...props} />;
 }
