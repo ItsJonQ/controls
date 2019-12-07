@@ -1,0 +1,59 @@
+{
+  "name": "@itsjonq/controls",
+  "version": "0.0.0",
+  "description": "A control panel to develop React UI",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "sideEffects": false,
+  "private": false,
+  "scripts": {
+    "prestart": "zero prestart",
+    "build:es": "BUILD_FORMAT=es zero build -d dist/es",
+    "build:cjs": "BUILD_FORMAT=cjs zero build -d dist/cjs",
+    "build": "npm run build:cjs && npm run build:es -- --no-clean",
+    "lint": "zero lint",
+    "dev": "zero test",
+    "test": "zero test --coverage",
+    "test:coverage": "zero test --coverage",
+    "format": "zero format",
+    "validate": "zero validate",
+    "release": "zero release",
+    "version": "npm run build",
+    "precommit": "zero pre-commit",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": "Jon Quach <hello@jonquach.com> (https://jonquach.com)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsjonq/controls.git"
+  },
+  "bugs": {
+    "url": "https://github.com/itsjonq/controls/issues"
+  },
+  "homepage": "https://github.com/itsjonq/controls#readme",
+  "keywords": [],
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "7.7.5",
+    "@itsjonq/zero": "4.1.9",
+    "@storybook/addon-actions": "5.2.8",
+    "@storybook/addon-links": "5.2.8",
+    "@storybook/addons": "5.2.8",
+    "@storybook/react": "5.2.8",
+    "babel-loader": "8.0.6",
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@itsjonq/elm": "0.0.6"
+  }
+}
