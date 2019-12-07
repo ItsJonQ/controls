@@ -1,6 +1,14 @@
 # 🎛 Controls
 
-> A control panel to develop React UI
+> A control panel to develop and prototype React UI
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+-   [Installation](#installation)
+-   [Usage](#usage)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Installation
 
