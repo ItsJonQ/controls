@@ -14,6 +14,7 @@ export function useControlPanel() {
 
 		broadcast.on('addAttribute', updateState);
 		broadcast.on('updateAttribute', updateState);
+		broadcast.on('resetAttributes', updateState);
 
 		if (!ref.current) {
 			ref.current = true;
@@ -24,8 +25,20 @@ export function useControlPanel() {
 			resetAttributes();
 			broadcast.off('addAttribute', updateState);
 			broadcast.off('updateAttribute', updateState);
+			broadcast.off('resetAttributes', updateState);
 		};
 	}, [ref, setAttributes]);
 
-	return { ...knobs, attributes };
+	const attributeProps = mapStateToProps(state);
+
+	return { ...knobs, attributes, attributeProps };
+}
+
+function mapStateToProps(state) {
+	return state.reduce((props, item) => {
+		return {
+			...props,
+			[item.prop]: item.value,
+		};
+	}, {});
 }
