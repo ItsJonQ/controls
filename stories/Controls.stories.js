@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useControlPanel, ControlPanel } from '../src/index';
 
 export default {
@@ -40,7 +40,6 @@ const Example = () => {
 
 	return (
 		<div>
-			<ControlPanel />
 			<p>
 				<strong>text</strong>
 				<br />
@@ -85,8 +84,16 @@ const Example = () => {
 	);
 };
 
-export const _default = () => (
-	<>
-		<Example />
-	</>
-);
+const ExampleWrapper = () => {
+	const [show, setShow] = useState(true);
+
+	return (
+		<>
+			<ControlPanel />
+			<button onClick={() => setShow(!show)}>Toggle View</button>
+			{show ? <Example /> : null}
+		</>
+	);
+};
+
+export const _default = () => <ExampleWrapper />;

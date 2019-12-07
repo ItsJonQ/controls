@@ -8,6 +8,8 @@ import { Field } from './Field';
 export function BaseControlPanel(props) {
 	const { attributes } = useControlPanel();
 
+	if (!attributes.length) return <div />;
+
 	const { isDark, title, padding, ...restProps } = props;
 
 	const handleOnChange = prop => nextValue => {

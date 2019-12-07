@@ -29,7 +29,7 @@ export function useControlPanel() {
 		};
 	}, [ref, setAttributes]);
 
-	const attributeProps = mapStateToProps(state);
+	const attributeProps = mapStateToProps(attributes);
 
 	return { ...knobs, attributes, attributeProps };
 }
