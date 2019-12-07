@@ -5,8 +5,7 @@ import { updateAttribute } from './store';
 import { useControlPanel } from './useControlPanel';
 import { Field } from './Field';
 
-export function ControlPanel(props) {
-	const { Portal } = usePortal();
+export function BaseControlPanel(props) {
 	const { attributes } = useControlPanel();
 
 	const { isDark, title, padding, ...restProps } = props;
@@ -18,19 +17,27 @@ export function ControlPanel(props) {
 	const headerTitle = title || 'Control Panel';
 
 	return (
+		<Wrapper {...restProps} isDark={isDark}>
+			<Header>{headerTitle}</Header>
+			<Body padding={padding || 8}>
+				{attributes.map(item => (
+					<Field
+						{...item}
+						key={item.prop}
+						onChange={handleOnChange(item.prop)}
+					/>
+				))}
+			</Body>
+		</Wrapper>
+	);
+}
+
+export function ControlPanel(props) {
+	const { Portal } = usePortal();
+
+	return (
 		<Portal>
-			<Wrapper {...restProps} isDark={isDark}>
-				<Header>{headerTitle}</Header>
-				<Body padding={padding || 8}>
-					{attributes.map(item => (
-						<Field
-							{...item}
-							key={item.prop}
-							onChange={handleOnChange(item.prop)}
-						/>
-					))}
-				</Body>
-			</Wrapper>
+			<BaseControlPanel {...props} />
 		</Portal>
 	);
 }
