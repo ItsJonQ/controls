@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useControlPanel, ControlPanel } from '../src/index';
+import { useControls, Controls } from '../src/index';
 
 export default {
 	title: 'Controls',
@@ -15,7 +15,7 @@ const Example = () => {
 		select,
 		text,
 		textarea,
-	} = useControlPanel();
+	} = useControls();
 
 	const props = {
 		text: text('text', 'Hello'),
@@ -89,7 +89,7 @@ const ExampleWrapper = () => {
 
 	return (
 		<>
-			<ControlPanel />
+			<Controls />
 			<button onClick={() => setShow(!show)}>Toggle View</button>
 			{show ? <Example /> : null}
 		</>

@@ -1,19 +1,19 @@
 import React from 'react';
 import usePortal from 'react-useportal';
 import { View } from '@itsjonq/elm';
-import { updateAttribute } from './store';
-import { useControlPanel } from './useControlPanel';
+import { updateField } from './store';
+import { useControls } from './useControls';
 import { Field } from './Field';
 
-export function BaseControlPanel(props) {
-	const { attributes } = useControlPanel();
+export function BaseControls(props) {
+	const { fields } = useControls();
 
-	if (!attributes.length) return <div />;
+	if (!fields.length) return <div />;
 
 	const { isDark, title, padding, ...restProps } = props;
 
 	const handleOnChange = prop => nextValue => {
-		updateAttribute({ prop, value: nextValue });
+		updateField({ prop, value: nextValue });
 	};
 
 	const headerTitle = title || 'Control Panel';
@@ -22,11 +22,11 @@ export function BaseControlPanel(props) {
 		<Wrapper {...restProps} isDark={isDark}>
 			<Header>{headerTitle}</Header>
 			<Body padding={padding || 8}>
-				{attributes.map(item => (
+				{fields.map(field => (
 					<Field
-						{...item}
-						key={item.prop}
-						onChange={handleOnChange(item.prop)}
+						{...field}
+						key={field.prop}
+						onChange={handleOnChange(field.prop)}
 					/>
 				))}
 			</Body>
@@ -34,12 +34,12 @@ export function BaseControlPanel(props) {
 	);
 }
 
-export function ControlPanel(props) {
+export function Controls(props) {
 	const { Portal } = usePortal();
 
 	return (
 		<Portal>
-			<BaseControlPanel {...props} />
+			<BaseControls {...props} />
 		</Portal>
 	);
 }

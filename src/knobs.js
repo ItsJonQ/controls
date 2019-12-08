@@ -1,6 +1,6 @@
 import colorUtil from 'tinycolor2';
 import { is } from '@itsjonq/is';
-import { addAttribute, getValue } from './store';
+import { addField, getValue } from './store';
 
 function toNumber(value) {
 	if (is.number(value)) return value;
@@ -30,49 +30,49 @@ function toDate(value) {
 }
 
 export function boolean(prop, value) {
-	addAttribute({ prop, type: 'boolean', value, parseValue: toBoolean });
+	addField({ prop, type: 'boolean', value, parseValue: toBoolean });
 
 	return getValue(prop);
 }
 
 export function color(prop, value) {
-	addAttribute({ prop, value, type: 'color', parseValue: toColor });
+	addField({ prop, value, type: 'color', parseValue: toColor });
 
 	return getValue(prop);
 }
 
 export function date(prop, value, options) {
-	addAttribute({ prop, value, type: 'date', options, parseValue: toDate });
+	addField({ prop, value, type: 'date', options, parseValue: toDate });
 
 	return getValue(prop);
 }
 
 export function range(prop, value, options) {
-	addAttribute({ prop, value, type: 'range', options, parseValue: toNumber });
+	addField({ prop, value, type: 'range', options, parseValue: toNumber });
 
 	return getValue(prop);
 }
 
 export function select(prop, options, value) {
-	addAttribute({ prop, value, type: 'select', options });
+	addField({ prop, value, type: 'select', options });
 
 	return getValue(prop);
 }
 
 export function text(prop, value) {
-	addAttribute({ prop, value, type: 'text' });
+	addField({ prop, value, type: 'text' });
 
 	return getValue(prop);
 }
 
 export function textarea(prop, value) {
-	addAttribute({ prop, value, type: 'textarea' });
+	addField({ prop, value, type: 'textarea' });
 
 	return getValue(prop);
 }
 
 export function number(prop, value) {
-	addAttribute({ prop, value, type: 'number', parseValue: toNumber });
+	addField({ prop, value, type: 'number', parseValue: toNumber });
 
 	return getValue(prop);
 }

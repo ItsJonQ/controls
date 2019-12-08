@@ -1,10 +1,10 @@
 import React from 'react';
 import { cy } from '@itsjonq/cyan';
-import { BaseControlPanel as ControlPanel } from '../index';
+import { BaseControls as Controls } from '../index';
 
-describe('ControlPanel', () => {
+describe('Controls', () => {
 	test('should render', () => {
-		cy.render(<ControlPanel />);
+		cy.render(<Controls />);
 
 		expect(cy.get('div').exists()).toBeTruthy();
 	});

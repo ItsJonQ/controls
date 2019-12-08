@@ -3,13 +3,13 @@ import memoize from 'memoize-one';
 import deepEqual from 'deep-equal';
 import { broadcast } from './broadcast';
 
-export const store = createStore({ attributes: [] });
+export const store = createStore({ fields: [] });
 
 function parseValue(value) {
 	return value;
 }
 
-function createAttribute(prop, value, props) {
+function createField(prop, value, props) {
 	const parseValueFn = props.parseValue || parseValue;
 
 	return {
@@ -20,80 +20,80 @@ function createAttribute(prop, value, props) {
 	};
 }
 
-function __addAttribute(props) {
+function __addField(props) {
 	const { prop, value } = props;
-	const prevAttrs = getAttributes();
-	const prevAttr = prevAttrs.find(attr => attr.prop === prop);
+	const prevFields = getFields();
+	const prevField = prevFields.find(field => field.prop === prop);
 
-	if (prevAttr) {
-		return updateAttribute(prop, value, props);
+	if (prevField) {
+		return updateField(prop, value, props);
 	}
 
-	const nextAttr = createAttribute(prop, value, props);
+	const nextField = createField(prop, value, props);
 
-	const nextAttrs = [...prevAttrs, nextAttr];
-	store.setState({ attributes: nextAttrs });
+	const nextFields = [...prevFields, nextField];
+	store.setState({ fields: nextFields });
 
-	broadcast.emit('addAttribute', nextAttr);
+	broadcast.emit('addField', nextField);
 
 	return value;
 }
 
-export const addAttribute = memoize(__addAttribute, deepEqual);
+export const addField = memoize(__addField, deepEqual);
 
-function __updateAttribute(props = {}) {
+function __updateField(props = {}) {
 	const { prop, value } = props;
 
-	const prevAttrs = getAttributes();
-	const prevAttr = prevAttrs.find(attr => attr.prop === prop);
+	const prevFields = getFields();
+	const prevField = prevFields.find(field => field.prop === prop);
 
-	if (!prevAttr) {
+	if (!prevField) {
 		return value;
 	}
 
-	const { value: prevValue, parseValue: parseValueProp } = prevAttr;
+	const { value: prevValue, parseValue: parseValueProp } = prevField;
 	const nextValue = parseValueProp(value);
 
 	if (prevValue === nextValue) {
 		return nextValue;
 	}
 
-	const nextAttrs = prevAttrs.map(attr => {
-		if (attr.prop === prop) {
+	const nextFields = prevFields.map(field => {
+		if (field.prop === prop) {
 			return {
-				...attr,
+				...field,
 				...props,
 				value: nextValue,
 			};
 		}
-		return attr;
+		return field;
 	});
 
-	const nextAttr = nextAttrs.find(attr => attr.prop === prop);
+	const nextField = nextFields.find(field => field.prop === prop);
 
-	store.setState({ attributes: nextAttrs });
+	store.setState({ fields: nextFields });
 
-	broadcast.emit('updateAttribute', nextAttr);
+	broadcast.emit('updateField', nextField);
 
 	return value;
 }
 
-export const updateAttribute = memoize(__updateAttribute, deepEqual);
+export const updateField = memoize(__updateField, deepEqual);
 
 export function resetAttributes() {
-	const prevAttrs = getAttributes();
-	const nextAttrs = prevAttrs.filter(() => false);
+	const prevFields = getFields();
+	const nextFields = prevFields.filter(() => false);
 
-	store.setState({ attributes: nextAttrs });
+	store.setState({ fields: nextFields });
 
 	broadcast.emit('resetAttributes');
 }
 
-export function getAttributes() {
-	return store.getState().attributes;
+export function getFields() {
+	return store.getState().fields;
 }
 
 export function getValue(prop) {
-	const item = getAttributes().find(attr => attr.prop === prop);
+	const item = getFields().find(field => field.prop === prop);
 	return item ? item.value : undefined;
 }

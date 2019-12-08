@@ -1,19 +1,19 @@
 import { useRef, useEffect, useState } from 'react';
 import { broadcast } from './broadcast';
-import { getAttributes, resetAttributes } from './store';
+import { getFields, resetAttributes } from './store';
 import * as knobs from './knobs';
 
-export function useControlPanel() {
-	const [attributes, setAttributes] = useState(getAttributes());
+export function useControls() {
+	const [fields, setFields] = useState(getFields());
 	const ref = useRef(false);
 
 	useEffect(() => {
 		const updateState = () => {
-			setAttributes(getAttributes());
+			setFields(getFields());
 		};
 
-		broadcast.on('addAttribute', updateState);
-		broadcast.on('updateAttribute', updateState);
+		broadcast.on('addField', updateState);
+		broadcast.on('updateField', updateState);
 		broadcast.on('resetAttributes', updateState);
 
 		if (!ref.current) {
@@ -23,15 +23,15 @@ export function useControlPanel() {
 
 		return () => {
 			resetAttributes();
-			broadcast.off('addAttribute', updateState);
-			broadcast.off('updateAttribute', updateState);
+			broadcast.off('addField', updateState);
+			broadcast.off('updateField', updateState);
 			broadcast.off('resetAttributes', updateState);
 		};
-	}, [ref, setAttributes]);
+	}, [ref, setFields]);
 
-	const attributeProps = mapStateToProps(attributes);
+	const attributes = mapStateToProps(fields);
 
-	return { ...knobs, attributes, attributeProps };
+	return { ...knobs, fields, attributes };
 }
 
 function mapStateToProps(state) {
