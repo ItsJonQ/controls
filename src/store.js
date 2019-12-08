@@ -1,7 +1,9 @@
 import createStore from 'unistore';
 import memoize from 'memoize-one';
 import deepEqual from 'deep-equal';
-import { broadcast } from './broadcast';
+import { getFields } from './selectors';
+
+export * from './selectors';
 
 export const store = createStore({ fields: [] });
 
@@ -34,12 +36,8 @@ function __addField(props) {
 	const nextFields = [...prevFields, nextField];
 	store.setState({ fields: nextFields });
 
-	broadcast.emit('addField', nextField);
-
 	return value;
 }
-
-export const addField = memoize(__addField, deepEqual);
 
 function __updateField(props = {}) {
 	const { prop, value } = props;
@@ -69,31 +67,18 @@ function __updateField(props = {}) {
 		return field;
 	});
 
-	const nextField = nextFields.find(field => field.prop === prop);
-
 	store.setState({ fields: nextFields });
-
-	broadcast.emit('updateField', nextField);
 
 	return value;
 }
 
-export const updateField = memoize(__updateField, deepEqual);
-
-export function resetAttributes() {
+function __resetFields() {
 	const prevFields = getFields();
 	const nextFields = prevFields.filter(() => false);
 
 	store.setState({ fields: nextFields });
-
-	broadcast.emit('resetAttributes');
 }
 
-export function getFields() {
-	return store.getState().fields;
-}
-
-export function getValue(prop) {
-	const item = getFields().find(field => field.prop === prop);
-	return item ? item.value : undefined;
-}
+export const addField = memoize(__addField, deepEqual);
+export const updateField = memoize(__updateField, deepEqual);
+export const resetFields = __resetFields;

@@ -1,6 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { broadcast } from './broadcast';
-import { getFields, resetAttributes } from './store';
+import { store, getFields, resetFields } from './store';
 import * as knobs from './knobs';
 
 export function useControls() {
@@ -8,24 +7,18 @@ export function useControls() {
 	const ref = useRef(false);
 
 	useEffect(() => {
-		const updateState = () => {
-			setFields(getFields());
-		};
-
-		broadcast.on('addField', updateState);
-		broadcast.on('updateField', updateState);
-		broadcast.on('resetAttributes', updateState);
+		const updateState = () => setFields(getFields());
 
 		if (!ref.current) {
 			ref.current = true;
 			updateState();
 		}
 
+		store.subscribe(updateState);
+
 		return () => {
-			resetAttributes();
-			broadcast.off('addField', updateState);
-			broadcast.off('updateField', updateState);
-			broadcast.off('resetAttributes', updateState);
+			resetFields();
+			store.unsubscribe(updateState);
 		};
 	}, [ref, setFields]);
 
