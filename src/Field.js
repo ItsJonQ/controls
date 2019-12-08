@@ -26,6 +26,7 @@ export function BaseInputField(props) {
 	return (
 		<View
 			as="input"
+			autoComplete="off"
 			backgroundColor="transparent"
 			border="1px solid var(--controlPanelBorderColor)"
 			color="inherit"
