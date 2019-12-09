@@ -21,7 +21,7 @@ const Example = () => {
 	const props = {
 		text: text('text', 'Hello'),
 		color: color('color', 'red'),
-		range: range('range', 10, { min: 0, max: 100 }),
+		range: range('range', 10, { min: 0, max: 20 }),
 		number: number('number', '123321'),
 		boolean: boolean('boolean', false),
 

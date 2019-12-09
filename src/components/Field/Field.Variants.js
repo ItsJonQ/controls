@@ -46,7 +46,7 @@ export function NumberField(props) {
 
 export function RangeField(props) {
 	const { options, ...restProps } = props;
-	return <TextField {...restProps} type="range" />;
+	return <TextField {...restProps} {...options} type="range" />;
 }
 
 export function SelectField(props) {
