@@ -1,6 +1,6 @@
 {
   "name": "@itsjonq/controls",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A control panel to develop React UI",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",
