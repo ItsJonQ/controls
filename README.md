@@ -1,5 +1,7 @@
 # 🎛 Controls
 
+[![Build Status](https://travis-ci.org/ItsJonQ/controls.svg?branch=master)](https://travis-ci.org/ItsJonQ/controls)
+
 > A control panel to develop and prototype React UI
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
