@@ -1,10 +1,10 @@
 import React from 'react';
 import { cy } from '@itsjonq/cyan';
-import { BaseControls as Controls } from '../../index';
+import { BaseControls } from '../BaseControls';
 
-describe('Controls', () => {
+describe('BaseControls', () => {
 	test('should render', () => {
-		cy.render(<Controls />);
+		cy.render(<BaseControls />);
 
 		expect(cy.get('div').exists()).toBeTruthy();
 	});

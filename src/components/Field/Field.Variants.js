@@ -1,46 +1,17 @@
-import React, { useState } from 'react';
-import { View } from '@itsjonq/elm';
+import React from 'react';
 
-import { createUniqueIdFactory } from '../utils';
+import { BaseInputField } from './Field.styles';
 
-const fieldId = createUniqueIdFactory('Field');
-
-function createBaseHandleOnChange(onChange) {
-	return event => {
-		onChange && onChange(event.target.value);
-	};
-}
-
-export function Label(props) {
-	const { children, label, ...restProps } = props;
-	return (
-		<View as="label" {...restProps}>
-			<View fontSize="0.9em" marginBottom={2} opacity={0.6}>
-				{label}
-			</View>
-			{children}
-		</View>
-	);
-}
-
-export function BaseInputField(props) {
-	return (
-		<View
-			as="input"
-			autoComplete="off"
-			backgroundColor="transparent"
-			border="1px solid var(--controlPanelBorderColor)"
-			color="inherit"
-			display="block"
-			fontFamily="inherit"
-			fontSize="inherit"
-			padding={2}
-			type="text"
-			width="100%"
-			{...props}
-		/>
-	);
-}
+export const FieldVariants = {
+	boolean: BooleanField,
+	color: ColorField,
+	date: DateField,
+	number: NumberField,
+	select: SelectField,
+	range: RangeField,
+	text: TextField,
+	textarea: TextAreaField,
+};
 
 export function BooleanField(props) {
 	const { value, onChange } = props;
@@ -114,28 +85,8 @@ export function TextAreaField(props) {
 	);
 }
 
-const FieldComponents = {
-	boolean: BooleanField,
-	color: ColorField,
-	date: DateField,
-	number: NumberField,
-	select: SelectField,
-	range: RangeField,
-	text: TextField,
-	textarea: TextAreaField,
-};
-
-export function Field(props) {
-	const [id] = useState(fieldId());
-	const { prop, type, ...restProps } = props;
-	const Component = FieldComponents[type];
-
-	if (!Component) return null;
-
-	return (
-		<View marginBottom={8}>
-			<Label label={prop} htmlFor={id} />
-			<Component {...restProps} id={id} />
-		</View>
-	);
+function createBaseHandleOnChange(onChange) {
+	return event => {
+		onChange && onChange(event.target.value);
+	};
 }

@@ -49,10 +49,14 @@
     "control"
   ],
   "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
   "dependencies": {
-    "@itsjonq/elm": "^0.0.6",
     "@itsjonq/is": "^0.0.2",
     "react-useportal": "^1.0.13",
+    "styled-view": "0.0.9",
     "tinycolor2": "^1.4.1",
     "unistore": "^3.5.1"
   },

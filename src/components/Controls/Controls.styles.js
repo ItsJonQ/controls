@@ -1,51 +1,7 @@
 import React from 'react';
-import usePortal from 'react-useportal';
-import { View } from '@itsjonq/elm';
+import { View } from 'styled-view';
 
-import { updateField } from '../store';
-import { useControls } from '../hooks';
-import { Field } from './Field';
-
-export function BaseControls(props) {
-	const { fields } = useControls();
-
-	if (!fields.length) return <div />;
-
-	const { isDark, title, padding, ...restProps } = props;
-
-	const handleOnChange = prop => nextValue => {
-		updateField({ prop, value: nextValue });
-	};
-
-	const headerTitle = title || 'Control Panel';
-
-	return (
-		<Wrapper {...restProps} isDark={isDark}>
-			<Header>{headerTitle}</Header>
-			<Body padding={padding || 8}>
-				{fields.map(field => (
-					<Field
-						{...field}
-						key={field.prop}
-						onChange={handleOnChange(field.prop)}
-					/>
-				))}
-			</Body>
-		</Wrapper>
-	);
-}
-
-export function Controls(props) {
-	const { Portal } = usePortal();
-
-	return (
-		<Portal>
-			<BaseControls {...props} />
-		</Portal>
-	);
-}
-
-function Wrapper(props) {
+export function Wrapper(props) {
 	const { isDark, style: styleProp = {} } = props;
 
 	const backgroundColor = isDark ? 'black' : 'white';
@@ -77,7 +33,7 @@ function Wrapper(props) {
 	return <View {...styleProps} {...props} style={componentStyles} />;
 }
 
-function Header(props) {
+export function Header(props) {
 	return (
 		<View
 			fontWeight="bold"
@@ -89,6 +45,6 @@ function Header(props) {
 	);
 }
 
-function Body(props) {
+export function Body(props) {
 	return <View overflowY="auto" flex={1} {...props} />;
 }
