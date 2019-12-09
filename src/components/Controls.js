@@ -1,8 +1,9 @@
 import React from 'react';
 import usePortal from 'react-useportal';
 import { View } from '@itsjonq/elm';
-import { updateField } from './store';
-import { useControls } from './useControls';
+
+import { updateField } from '../store';
+import { useControls } from '../hooks';
 import { Field } from './Field';
 
 export function BaseControls(props) {

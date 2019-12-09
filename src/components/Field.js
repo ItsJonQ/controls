@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View } from '@itsjonq/elm';
-import { createUniqueIdFactory } from './utils';
+
+import { createUniqueIdFactory } from '../utils';
 
 const fieldId = createUniqueIdFactory('Field');
 

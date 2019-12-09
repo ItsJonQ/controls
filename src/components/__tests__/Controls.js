@@ -1,6 +1,6 @@
 import React from 'react';
 import { cy } from '@itsjonq/cyan';
-import { BaseControls as Controls } from '../index';
+import { BaseControls as Controls } from '../../index';
 
 describe('Controls', () => {
 	test('should render', () => {

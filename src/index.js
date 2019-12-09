@@ -1,4 +1,4 @@
-export * from './useControls';
-export * from './Controls';
+export * from './components';
+export * from './hooks';
 export * from './knobs';
 export * from './store';

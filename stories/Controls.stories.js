@@ -6,6 +6,7 @@ export default {
 };
 
 const Example = () => {
+	const [state, setState] = useState(0);
 	const {
 		boolean,
 		color,
@@ -40,6 +41,8 @@ const Example = () => {
 
 	return (
 		<div>
+			<button onClick={() => setState(state + 1)}>Re-Render View</button>
+			<br />
 			<p>
 				<strong>text</strong>
 				<br />
@@ -91,6 +94,7 @@ const ExampleWrapper = () => {
 		<>
 			<Controls />
 			<button onClick={() => setShow(!show)}>Toggle View</button>
+			<hr />
 			{show ? <Example /> : null}
 		</>
 	);
