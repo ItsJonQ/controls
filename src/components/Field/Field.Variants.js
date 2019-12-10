@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { ColorPicker } from '../ColorPicker';
 import { BaseInputField } from './Field.styles';
 
 export const FieldVariants = {
@@ -33,7 +34,7 @@ export function BooleanField(props) {
 }
 
 export function ColorField(props) {
-	return <TextField {...props} type="color" padding={0} width={50} />;
+	return <ColorPicker {...props} />;
 }
 
 export function DateField(props) {
