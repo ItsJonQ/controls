@@ -6,11 +6,11 @@ export default {
 };
 
 const SubComponent = ({ value }) => {
-	return <div>{value ? 'Yes' : 'No'}</div>;
+	return <span>{value ? 'Yes' : 'No'}</span>;
 };
 
-const This = () => <div>This</div>;
-const That = () => <div>That</div>;
+const This = () => <span>This</span>;
+const That = () => <span>That</span>;
 
 const Example = props => {
 	const [state, setState] = useState(0);

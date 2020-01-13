@@ -48,7 +48,7 @@ export function addField(props) {
 	const prevField = getField(prop);
 
 	if (prevField) {
-		return updateField(prop, value, props);
+		return;
 	}
 
 	const prevFields = getFields();
