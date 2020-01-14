@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useControls, Controls } from '../src/index';
+import { useControls, Controls, updateFields } from '../src/index';
 
 export default {
 	title: 'LocalState',
@@ -48,9 +48,17 @@ const Example = props => {
 	const showThis = attributes.boolean;
 	const showThat = !showThis;
 
+	const handleOnUpdate = () => {
+		setState(state + 1);
+		updateFields({
+			text: 'Hallo There!',
+			color: 'blue',
+		});
+	};
+
 	return (
 		<div>
-			<button onClick={() => setState(state + 1)}>Re-Render View</button>
+			<button onClick={handleOnUpdate}>Override Field Values</button>
 			<br />
 			<p>
 				<strong>text</strong>

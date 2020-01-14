@@ -46,7 +46,11 @@ export function useControls() {
 
 	const attributes = mapStateToProps(fields);
 
-	return { ...knobs, fields, attributes };
+	return {
+		...knobs,
+		fields,
+		attributes,
+	};
 }
 
 /**

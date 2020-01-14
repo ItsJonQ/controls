@@ -17,7 +17,7 @@ export function BaseControls(props) {
 	const { isDark, title, padding, ...restProps } = props;
 
 	const handleOnChange = prop => nextValue => {
-		updateField({ prop, value: nextValue });
+		updateField(prop, nextValue);
 	};
 
 	const headerTitle = title || 'Control Panel';

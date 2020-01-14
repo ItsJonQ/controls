@@ -10,6 +10,7 @@
 -   [Installation](#installation)
 -   [Usage](#usage)
     -   [Fields](#fields)
+    -   ["Controlled" Fields](#controlled-fields)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -86,6 +87,43 @@ function Example() {
 		title,
 		description,
 	} = attributes;
+
+	return <div>...</div>;
+}
+```
+
+### "Controlled" Fields
+
+To manually update a field (or fields), use the `updateField` or `updateFields` function.
+
+```jsx
+import React from 'react';
+import {
+	useControls,
+	Controls,
+	updateField,
+	updateFields,
+} from '@itsjonq/controls';
+
+function Example() {
+	const { text } = useControls();
+
+	text('title', 'My Title');
+	text('description', 'My Description');
+	text('caption', 'My Caption');
+
+	// The names of the attributes registered with the fields
+	const { title, description, caption } = attributes;
+
+	const handleOnManualUpdateFields = () => {
+		// Update a single field
+		updateField('title', 'New Title');
+		// Update multiple fields
+		updateFields({
+			description: 'New Description',
+			caption: 'New Caption',
+		});
+	};
 
 	return <div>...</div>;
 }

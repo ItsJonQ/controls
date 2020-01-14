@@ -1,4 +1,5 @@
 import createStore from 'unistore';
+import { is } from '@itsjonq/is';
 
 import { getFields, getField } from './selectors';
 import { toValue } from '../knobs/transformValue';
@@ -63,19 +64,16 @@ export function addField(props) {
 
 /**
  * Updates a field to the store.
- * @param {Object} props Data to be parsed and updatre to the store as a field.
- * @returns {any} The value of the field.
+ * @param {string} prop The id (prop) of the field to update.
+ * @param {any} value The next value for the field.
+ * @returns {any} The next value of the field.
  */
-export function updateField(props = {}) {
-	const { prop, value } = props;
-
+export function updateField(prop, value) {
 	const prevField = getField(prop);
 
 	if (!prevField) {
 		return value;
 	}
-
-	const prevFields = getFields();
 
 	const { value: prevValue, transformValue: transformValueProp } = prevField;
 	const nextValue = transformValueProp(value);
@@ -84,20 +82,81 @@ export function updateField(props = {}) {
 		return nextValue;
 	}
 
+	updateFields({ [prop]: value });
+
+	return value;
+}
+
+/**
+ * Updates several fields in the store.
+ * @param {Object} fields Fields to be updated. Key is the id, value is the next value.
+ * @returns {Array} The updated fields.
+ */
+export function updateFields(fields = {}) {
+	if (!is.plainObject(fields)) {
+		return [];
+	}
+
+	const props = Object.keys(fields);
+	const prevFields = getFields();
+	let diffs = 0;
+
 	const nextFields = prevFields.map(field => {
-		if (field.prop === prop) {
+		const { prop, value } = field;
+
+		if (props.includes(prop)) {
+			const nextValue = fields[prop];
+			if (value !== nextValue) {
+				diffs++;
+			}
+
 			return {
 				...field,
-				...props,
 				value: nextValue,
 			};
 		}
+
 		return field;
 	});
 
-	store.setState({ fields: nextFields });
+	// Prevents unnecessary re-renders if there are no changes.
+	if (diffs) {
+		store.setState({ fields: nextFields });
+	}
 
-	return value;
+	return nextFields;
+}
+
+/**
+ * A forceful way to override the fields. Hope you know what you're doing!
+ * @param {Array|Object} fields The next fields to forcefully update to.
+ * @returns {any} The next fields, if successful.
+ */
+export function unsafeOverrideFields(fields = {}) {
+	let nextFields;
+
+	if (is.plainObject(fields)) {
+		nextFields = Object.keys(fields).reduce((next, prop) => {
+			const value = fields[prop];
+			return [
+				...next,
+				{
+					prop,
+					value,
+				},
+			];
+		}, []);
+	}
+
+	if (is.array) {
+		nextFields = fields;
+	}
+
+	if (nextFields) {
+		store.setState({ fields: nextFields });
+	}
+
+	return nextFields;
 }
 
 /**

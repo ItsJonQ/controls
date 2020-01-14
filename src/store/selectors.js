@@ -5,7 +5,7 @@ import { store } from './store';
  * @returns {Array<Object>} Fields from the store.
  */
 export function getFields() {
-	return store.getState().fields || [];
+	return [...store.getState().fields] || [];
 }
 
 /**
